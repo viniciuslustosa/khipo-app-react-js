@@ -1,3 +1,11 @@
+- [X] Utilizar TypeScript
+- [X] Utilizar React ou Next no Frontend
+- [X] Utilizar Material UI
+- [X] Utilizar NestJs no Backend
+- [X] Utilizar banco de dados MongoDB
+- [X] Seguir os Wireframes do Figma
+- [X] Entender o que está sendo pedido no design e modelar as tabelas do banco de acordo
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
