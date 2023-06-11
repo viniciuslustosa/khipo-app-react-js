@@ -9,7 +9,7 @@ import './App.css';
 const theme = createTheme({
   palette: {
     primary: {
-      // light: will be calculated from palette.primary.main,
+      light: '#EA599C',//will be calculated from palette.primary.main,
       main: '#3A8EDD',
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
@@ -21,8 +21,8 @@ const theme = createTheme({
       contrastText: '#ffcc00',
     },
     success: {
-      light: '#838383',
-      main: '#838383',
+      light: '#3FB36D',
+      main: '#3FB36D',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#ffcc00',
     },
@@ -33,6 +33,20 @@ const theme = createTheme({
     // dois índices dentro de sua paleta tonal.
     // Por exemplo, mude de Red 500 para Red 300 ou Red 700.
     tonalOffset: 0.2,
+  },
+  typography: {
+    button: {
+      textTransform: 'none'
+    }
+  },
+  components: {
+    MuiInputLabel: {
+      styleOverrides: {
+        asterisk: {
+          color: '#ff0000',
+        },
+      },
+    },
   },
 });
 

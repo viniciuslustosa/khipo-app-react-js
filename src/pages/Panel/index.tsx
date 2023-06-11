@@ -1,59 +1,92 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import GridViewIcon from '@mui/icons-material/GridView';
-import { Container } from '@mui/material';
-import NavBar from '../../components/NavBar';
-
-const drawerWidth = 240;
+import { useAuth } from '../../contexts/AuthContext';
+import { Box, Container, Grid } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
 
 const Panel: React.FC = () => {
+    const { user } = useAuth();    
+    const cards = [
+        {
+            title: 'Lorem ipsum dolor sit amet',
+            description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.'
+        },
+        {
+            title: 'Lorem ipsum dolor sit amet',
+            description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.'
+        },
+        {
+            title: 'Lorem ipsum dolor sit amet',
+            description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.'
+        },
+        {
+            title: 'Lorem ipsum dolor sit amet',
+            description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.'
+        }
+    ]
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Drawer
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: drawerWidth,
-                        boxSizing: 'border-box',
-                        backgroundColor: '#DEE5EE',
-                        border: 'none',
-                    zIndex: 0
-                },
-            }}
-            variant="permanent"
-            anchor="left"
-            >
-                <Toolbar />
-                <Divider />
-                <List sx={{ display: 'flex', flexDirection: 'column', gap: '15px', margin: '15px 0', padding: '20px' }}>
-                {['Link', 'Link', 'Link', 'Link', 'Link'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton sx={{ borderRadius: '10px', backgroundColor: '#EDF1F6' }}>
-                            <ListItemIcon>
-                                <GridViewIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-                </List>
-            </Drawer>
-            <Box
-                component="main"
-            >
+        <React.Fragment>
+            <Box component="span" sx={{ justifyContent: 'flex-start'}}>
+                <span style={{ fontSize: 20 }}>Welcome, <strong>{ user?.firstName } { user?.lastName }!</strong></span>
             </Box>
-        </Box>
+            <Box sx={{
+                width: '100%',
+                backgroundColor: 'white',
+                boxSizing: 'border-box',
+                margin: '20px 0',
+                padding: '20px',
+                borderRadius: '10px',
+            }}>
+                <Grid container>
+                    <Grid xs={12}>
+                        <Box sx={{
+                            justifyContent: 'center',
+                            textAlign: 'center',
+                            fontWeight: 'bold',
+                            margin: '10px 0' }}>
+                            <span style={{ fontSize: '26px' }}>
+                                This is the headline
+                            </span>
+                        </Box>
+                    </Grid>
+                    <Grid xs={12}>
+                        <Box sx={{
+                            justifyContent: 'center',
+                            textAlign: 'center',
+                            color: '#5C6474',
+                            padding: '0 80px',
+                            margin: '10px 0' }}>
+                            <span>
+                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                            </span>
+                        </Box>
+                    </Grid>
+                    { cards.map((card) => (
+                        <Grid xs={6}>
+                            <Box sx={{
+                            justifyContent: 'center',
+                            textAlign: 'left',
+                            color: '#5C6474',
+                            padding: '0 20px',
+                            display: 'flex',
+                            gap: '10px',
+                            margin: '10px 0' }}>
+                                <div>
+                                    <CheckIcon color='success'></CheckIcon>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                    <span>
+                                        <strong> { card.title } </strong>
+                                    </span>
+                                    <span>
+                                        { card.description }
+                                    </span>
+                                </div>
+                            </Box>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Box>
+        </React.Fragment>
     );
 }
 

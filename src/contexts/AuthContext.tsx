@@ -7,6 +7,7 @@ interface AuthContextData {
   signed: boolean;
   user: User | null;
   Login(user: object): Promise<void>;
+  Register(user: object): Promise<void>;
   Logout(): void;
 }
 
@@ -32,7 +33,21 @@ export const AuthProvider: React.FC<any> = ({ children }) => {
 
   async function Login(userData: Partial<User>) {
     try {
-      const response = await api.post('admins/login', userData);
+      const response = await api.post('auth/login', userData);
+      setUser(response.data.user);
+      
+      defaults.headers.Authorization = `Bearer ${response.data.accessToken}`;
+      
+      localStorage.setItem('@App:user', JSON.stringify(response.data.user));
+      localStorage.setItem('@App:accessToken', response.data.accessToken);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function Register(userData: Partial<User>) {
+    try {
+      const response = await api.post('auth/register', userData);
       setUser(response.data.user);
       
       defaults.headers.Authorization = `Bearer ${response.data.accessToken}`;
@@ -52,7 +67,7 @@ export const AuthProvider: React.FC<any> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ signed, user, Login, Logout }}
+      value={{ signed, user, Login, Logout, Register }}
     >
       {children}
     </AuthContext.Provider>

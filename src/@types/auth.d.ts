@@ -10,3 +10,10 @@ export interface LoginPayload {
 export interface LoginResponse {
     accessToken: AccessToken;
 }
+
+export interface RegisterPayload {
+    firstName: User['firstName'],
+    lastName: User['lastName'],
+    email: User['email'];
+    password: User['password'];
+}

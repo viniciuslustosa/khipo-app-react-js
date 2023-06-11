@@ -1,19 +1,21 @@
 import React from 'react';
-import { BrowserRouter as Router, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Outlet, Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import NotFound from '../components/NotFound';
 import Login from '../pages/Login';
 import { useAuth } from '../contexts/AuthContext';
 import Base from '../components/Base';
-import Register from '../pages/register';
+import Register from '../pages/Register';
 import Panel from '../pages/Panel';
 
 function AppRoutes() {
   return (
     <Router>
         <Routes>
-            <Route path="/" element={<BaseRoutes />} >
-              <Route path="/signin" element={<Login />} />
-              <Route path="/signup" element={<Register />} />
+            <Route path="/auth" element={<BaseRoutes />} >
+              <Route path="signin" element={<Login />} />
+              <Route path="signup" element={<Register />} />
+            </Route>
+            <Route path="/" element={<AuthorizedRoutes />} >
               <Route path="/panel" element={<Panel />} />
             </Route>
             <Route path="*" element={<NotFound />} />
@@ -26,14 +28,23 @@ const AuthorizedRoutes: React.FC<any> = ({ children }) => {
   const { signed } = useAuth()
   const location = useLocation()
   
-  //if (!signed) return <Navigate to="/" state={{from: location}} />
+  if (!signed) return <Navigate to="/auth/signin" state={{from: location}} />
 
-  return <></>
+  return (
+    <Base signed={signed}>
+      <Outlet />
+    </Base>
+  )
 }
 
 const BaseRoutes: React.FC<any> = ({ children }) => {
+  const { signed } = useAuth()
+  const location = useLocation()
+  
+  if (signed) return <Navigate to="/panel" state={{from: location}} />
+
   return (
-    <Base>
+    <Base signed={signed}>
       <Outlet />
     </Base>
   )

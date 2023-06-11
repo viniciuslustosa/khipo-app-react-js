@@ -1,8 +1,9 @@
 export interface User {
     _id: string,
-    name: string,
+    firstName: string,
+    lastName: string,
     email: string,
-    avatarUrl: string;
+    password: string,
     deleted: boolean,
     deletedAt: Date,
     createdAt: Date,

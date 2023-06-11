@@ -1,11 +1,13 @@
 import { FormControl, InputBase, InputLabel, alpha, styled } from '@mui/material';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import './style.css';
 
 interface InputProps {
+    value?: any,
     label?: string,
     type?: string,
     required?: boolean,
+    onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
 }
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -37,14 +39,14 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   }));
   
 
-const Input: React.FC<InputProps> = ({ label, type, required }) => {
+const Input: React.FC<InputProps> = ({ onChange, value, label, type, required }) => {
   return (
     <div className="contentInput">
         <FormControl sx={{ width: '100%' }} variant="standard">
-            <InputLabel required={required} shrink htmlFor="bootstrap-input">
+            <InputLabel sx={{ color: 'black', fontSize: 20, fontWeight: 'bold' }} required={required} shrink htmlFor="bootstrap-input">
             { label ?? 'label' }
             </InputLabel>
-            <BootstrapInput type={type} id="bootstrap-input" />
+            <BootstrapInput value={value} onChange={(e) => onChange(e)} type={type} required={required} />
         </FormControl>
     </div>
   );

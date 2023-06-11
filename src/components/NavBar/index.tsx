@@ -12,13 +12,17 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { EmailUser } from './style';
+
 
 const pages = ['Inspiration', 'Find Word', 'Learn Design', 'Hire Designers'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
+  const { user, Logout } = useAuth()
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate()
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -111,15 +115,38 @@ function ResponsiveAppBar() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'black', display: 'block' }}
+                sx={{ my: 2, color: 'secondary.light', display: 'block' }}
               >
                 {page}
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Button variant="text" onClick={() => {}}>Sign In</Button>
-            <Button variant="contained" onClick={() => {}}>Sign Up</Button>
+          <Box sx={{ flexGrow: 0, display: 'flex', gap: '10px' }}>
+            { user &&
+              <React.Fragment>
+                <EmailUser>
+                  { user?.email }
+                </EmailUser>
+                <Button variant="contained" sx={{ backgroundColor: 'primary.light' }} onClick={() => Logout()}>Sign Out</Button>
+              </React.Fragment>
+            }
+
+            { !user &&
+              <React.Fragment>
+                <Button
+                  variant="text"
+                  sx={{ color: 'secondary.light' }}
+                  onClick={() => navigate('/auth/signin')}>
+                    Sign In
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: 'primary.light' }}
+                  onClick={() => navigate('/auth/signup')}>
+                    Sign Up
+                </Button>
+              </React.Fragment>
+            }
           </Box>
         </Toolbar>
       </Container>
